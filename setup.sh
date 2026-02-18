@@ -1,3 +1,5 @@
+set -euo pipefail
+
 PACKAGES=("node")
 
 # check for root access
@@ -46,7 +48,7 @@ for index in "${!PACKAGES[@]}"; do
         echo "$PACKAGE is installed and available in PATH"
     else
         echo "$PACKAGE is either not installed or not in PATH!"
-        if [ isSudo -eq true ]; then
+        if [ "$isSudo" -eq true ]; then
             sudo "$pkgManager" install "$PACKAGE"
         else
             echo "Please install the package \"$PACKAGE\"."
@@ -55,11 +57,29 @@ for index in "${!PACKAGES[@]}"; do
     fi
 done
 
+echo ""
 echo "Creating EPM directory..."
-mkdir EPM
-echo "Creating EPM directory files..."
+mkdir -p EPM
+echo ""
+echo "Downloading EPM source code..."
 cd EPM
-# complete this
+wget -O files https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/files.txt
+# cp files.txt files # when testing un-commited code
+# iterate through files lited
+for file in $(cat files); do
+    echo "Downloading $file..."
+    wget "-O $file" -q -n "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file"
+done
+
+echo ""
+echo "Elevating epm.sh.."
+chmod +x ../epm.sh
+
+echo ""
+echo "Cleaning up..."
+rm files
 cd ..
 
+echo ""
+echo ""
 echo "Done!"

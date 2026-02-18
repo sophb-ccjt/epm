@@ -11,4 +11,5 @@ sudo chmod +x setup.sh
 ./setup.sh
 ```
 
-This should create an `epm.sh` file and `epm` directory 
+This should create an `epm.sh` file and `EPM` directory.
+Run `epm.sh -h` for info on arguments
