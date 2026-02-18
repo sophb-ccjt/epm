@@ -7,9 +7,15 @@ Official GitHub repository for EPM (Easily Parse-able Markdown)
 Run this on your terminal:
 ```bash
 wget https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/setup.sh
-sudo chmod +x setup.sh
+chmod +x setup.sh
 ./setup.sh
 ```
 
+or, if you want missing packages to be automatically installed, run this: 
+```bash
+wget https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/setup.sh
+chmod +x setup.sh
+sudo bash ./setup.sh
+```
+
 This should create an `epm.sh` file and `EPM` directory.
-Run `epm.sh -h` for info on arguments
