@@ -1,7 +1,9 @@
 # EPM
+
 Official GitHub repository for EPM (Easily Parse-able Markdown)
 
 # Setup
+
 **Note:** EPM currently only works via CLI on Linux. More platform support is coming soon.
 
 Run this on your terminal:
