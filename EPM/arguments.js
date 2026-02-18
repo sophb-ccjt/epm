@@ -12,6 +12,7 @@ const DEFAULTS = {
     allowMd: false,
     allowBb: false,
     errorInvalid: false,
+    tabSize: 4,
 };
 
 // simple argument parser
@@ -24,9 +25,13 @@ function parseArgs(argv) {
             case '-i':
                 args.file = argv[++i];
                 break;
-            case '--output':
-            case '-o':
+            case '--output-type':
+            case '-O':
                 args.outputType = argv[++i];
+                break;
+            case '--tab-size':
+            case '-t':
+                args.tabSize = parseInt(argv[++i]);
                 break;
             case '--flush-by-default':
             case '-f':
@@ -37,7 +42,7 @@ function parseArgs(argv) {
                 args.minify = true;
                 break;
             case '--output-file':
-            case '-O':
+            case '-o':
                 args.outputFile = argv[++i];
                 break;
             case '--allow-md':
@@ -78,6 +83,7 @@ function main() {
         allowMd: parsedArgs.allowMd,
         allowBb: parsedArgs.allowBb,
         errorInvalid: parsedArgs.errorInvalid,
+        tabSize: parsedArgs.tabSize,
     });
 }
 

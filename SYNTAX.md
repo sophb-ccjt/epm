@@ -91,7 +91,11 @@ This collapses to the third line, since the parser is currently flushing by defa
 - Only affects the next line.
 - Can be combined with any line type (paragraph, heading, etc.).
 
-## 5. Optional Syntax
+## 5. Links
+
+
+
+## 6. Optional Syntax
 
 - Future versions may include features like bold, italic, code blocks, notes (like Discord's `-#`), or syntax-highlighted code blocks.
 - The official parser will also optionally support Markdown (`--allow-md`) and BBCode (`--allow-bb`).
