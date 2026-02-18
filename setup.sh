@@ -1,6 +1,6 @@
 set -o pipefail
 
-LOCAL_TESTING=true
+LOCAL_TESTING=false
 
 PACKAGES=("node")
 
