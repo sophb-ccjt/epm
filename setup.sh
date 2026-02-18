@@ -1,5 +1,7 @@
 set -o pipefail
 
+LOCAL_TESTING=true
+
 PACKAGES=("node")
 
 # check for root access
@@ -45,13 +47,14 @@ echo "Checking packages..."
 for index in "${!PACKAGES[@]}"; do
     PACKAGE="${PACKAGES[$index]}"
     if command -v "$PACKAGE" &> /dev/null; then
-        echo "$PACKAGE is installed and available in PATH"
+        echo "\"$PACKAGE\" is installed and available in PATH."
     else
-        echo "$PACKAGE is either not installed or not in PATH!"
-        if [ "$isSudo" -eq true ]; then
+        echo "\"$PACKAGE\" is either not installed or not in PATH!"
+        if [ "$isSudo" = true ]; then
+            echo "Installing $PACKAGE..."
             sudo "$pkgManager" install "$PACKAGE"
         else
-            echo "Please install the package \"$PACKAGE\"."
+            echo "Please install the package \"$PACKAGE\" manually."
             exit 1
         fi
     fi
@@ -61,20 +64,27 @@ echo ""
 echo "Forming EPM directory..."
 mkdir -p EPM
 cd EPM
-wget -O files -q https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/files.txt
-# cp files.txt files # when testing un-commited code
+TEMP_FILELIST=files
+
+if [ "$LOCAL_TESTING" = true ]; then
+    cp files.txt "$TEMP_FILELIST"
+else
+    wget -O "$TEMP_FILELIST" -q https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/files.txt
+fi
+
 echo ""
 # download files listed in files.txt
-for file in $(cat files); do
+
+while IFS= read -r file; do
     echo "Downloading \"$file\"..."
-    wget "-O$file" -q -N "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file"
-done
+    wget -O "$file" -q -N -t 5 --timeout=12 "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file" || echo "Failed to download $file after 5 tries"
+done < "$TEMP_FILELIST"
 
 echo ""
 echo "Finalizing..."
-rm files
+rm "$TEMP_FILELIST"
 cd ..
 chmod +x ./epm.sh
 
 echo ""
-echo "Done!"
+echo "EPM Setup complete. Run \"./epm.sh\" to use the CLI."
