@@ -58,27 +58,23 @@ for index in "${!PACKAGES[@]}"; do
 done
 
 echo ""
-echo "Creating EPM directory..."
+echo "Forming EPM directory..."
 mkdir -p EPM
-echo ""
-echo "Downloading EPM source code..."
 cd EPM
-wget -O files https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/files.txt
+wget -O files -q https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/files.txt
 # cp files.txt files # when testing un-commited code
-# iterate through files lited
+echo ""
+# download files listed in files.txt
 for file in $(cat files); do
-    echo "Downloading $file..."
-    wget "-O $file" -q -N "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file"
+    echo "Downloading \"$file\"..."
+    wget "-O$file" -q -N "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file"
 done
 
 echo ""
-echo "Elevating epm.sh.."
-chmod +x ../epm.sh
-
-echo ""
-echo "Cleaning up..."
+echo "Finalizing..."
 rm files
 cd ..
+chmod +x ./epm.sh
 
 echo ""
 echo "Done!"
