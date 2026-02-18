@@ -1,4 +1,4 @@
-set -euo pipefail
+set -o pipefail
 
 PACKAGES=("node")
 
@@ -68,7 +68,7 @@ wget -O files https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/E
 # iterate through files lited
 for file in $(cat files); do
     echo "Downloading $file..."
-    wget "-O $file" -q -n "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file"
+    wget "-O $file" -q -N "https://raw.githubusercontent.com/sophb-ccjt/epm/refs/heads/main/EPM/$file"
 done
 
 echo ""
@@ -80,6 +80,5 @@ echo "Cleaning up..."
 rm files
 cd ..
 
-echo ""
 echo ""
 echo "Done!"
